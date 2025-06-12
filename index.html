@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para o Amor da Minha Vida</title>
+    <!-- Favicon de Coração -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e11d48'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Usando as fontes importadas */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fdf2f8; /* Rosa bem clarinho */
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Efeito de digitação */
+        .blinking-cursor {
+            border-right: 4px solid rgba(0, 0, 0, .75);
+            animation: blink .7s steps(2, start) infinite;
+        }
+        @keyframes blink {
+            to {
+                visibility: hidden;
+            }
+        }
+        /* Estilização da carta */
+        .envelope {
+            position: relative;
+            width: 280px;
+            height: 180px;
+            background: #fecdd3; /* Rosa claro */
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .envelope:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fca5a5; /* Rosa um pouco mais escuro */
+            clip-path: polygon(0 0, 100% 0, 50% 60%);
+            border-radius: 10px 10px 0 0;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        .envelope .letter-paper {
+            position: absolute;
+            left: 10px;
+            bottom: 0;
+            width: 260px;
+            height: 160px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        .envelope:hover:before {
+            transform: translateY(-20px);
+        }
+        .envelope:hover .letter-paper {
+            transform: translateY(-30px);
+        }
+        /* Estilo para as fotos da galeria */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        .gallery-item .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 2rem 1rem 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+        /* Estilos para a nova seção de música personalizada */
+        .music-card {
+            background-color: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(236, 72, 153, 0.1);
+            transition: all 0.3s ease;
+        }
+        .music-card:hover {
+             transform: translateY(-5px);
+             box-shadow: 0 15px 25px rgba(236, 72, 153, 0.2);
+        }
+        .player-controls {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem 1rem 1rem;
+        }
+        .play-pause-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #ec4899;
+            font-size: 2.5rem; /* Aumenta o tamanho do ícone */
+        }
+        .progress-bar-container {
+            flex-grow: 1;
+            height: 6px;
+            background-color: #e5e7eb;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #ec4899;
+            border-radius: 3px;
+            transition: width 0.1s linear;
+        }
+
+        /* Estilos para o Quiz */
+        .quiz-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+        .quiz-option {
+            display: block;
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            margin-bottom: 0.5rem;
+            border: 2px solid #fecdd3;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            text-align: center;
+        }
+        .quiz-option:hover {
+            background-color: #fbcfe8;
+        }
+        .quiz-option.correct {
+            background-color: #a7f3d0;
+            border-color: #34d399;
+            cursor: not-allowed;
+        }
+        .quiz-option.incorrect {
+            background-color: #fecaca;
+            border-color: #f87171;
+        }
+        .voucher {
+            background-color: #fef3c7;
+            border: 2px dashed #fcd34d;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            margin-top: 1rem;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Seção Inicial -->
+    <section id="inicio" class="min-h-screen flex flex-col justify-center items-center text-center p-8">
+        <h1 class="text-4xl md:text-6xl text-rose-800 mb-4">Para o Amor da Minha Vida</h1>
+        <p class="max-w-2xl text-lg text-gray-600 mb-12">
+            Às vezes, as palavras não são suficientes para expressar tudo o que sinto. Mas preparei uma pequena surpresa para você. Clique na carta abaixo.
+        </p>
+        <div id="envelope" class="envelope group">
+            <div class="letter-paper"></div>
+        </div>
+    </section>
+
+    <!-- Seção da Carta -->
+    <section id="carta" class="min-h-screen relative bg-white hidden flex-col justify-center items-center p-8 md:p-16">
+        <div class="w-full max-w-4xl bg-gray-50 p-8 md:p-16 rounded-lg shadow-2xl">
+            <p id="texto-carta" class="text-xl md:text-2xl leading-relaxed text-gray-700 whitespace-pre-wrap font-serif"></p>
+        </div>
+        <div id="scroll-arrow" class="absolute bottom-10 hidden">
+            <svg class="w-10 h-10 text-rose-400 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+    </section>
+
+    <!-- INÍCIO DA NOVA SEÇÃO DE MÚSICA PERSONALIZADA -->
+    <section id="musica" class="py-20 bg-rose-50 hidden">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl md:text-5xl text-center text-rose-800 mb-12 font-serif">Escolha uma de nossas trilhas sonoras</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Player 1: Matuê - Maria -->
+                <div class="music-card">
+                    <!-- IMPORTANTE: Troque 'capa-matue.jpg' pelo nome do seu arquivo de imagem -->
+                    <img src="333.jpeg" alt="Capa do álbum Máquina do Tempo de Matuê" class="w-full h-auto object-cover">
+                    <div class="p-4 text-left">
+                        <h3 class="font-bold text-lg">Maria</h3>
+                        <p class="text-gray-600">Matuê</p>
+                    </div>
+                    <div class="player-controls">
+                        <button class="play-pause-btn"><i class="fas fa-play-circle"></i></button>
+                        <div class="progress-bar-container"><div class="progress-bar"></div></div>
+                    </div>
+                    <!-- IMPORTANTE: Troque 'maria.mp3' pelo nome do seu arquivo de áudio -->
+                    <audio class="audio-player" src="mariasom.mp3"></audio>
+                </div>
+
+                <!-- Player 2: Alceu Valença - La Belle de Jour -->
+                <div class="music-card">
+                    <!-- IMPORTANTE: Troque 'capa-alceu.jpg' pelo nome do seu arquivo de imagem -->
+                    <img src="labelle.jpeg" alt="Capa do álbum O Grande Encontro de Alceu Valença" class="w-full h-auto object-cover">
+                    <div class="p-4 text-left">
+                        <h3 class="font-bold text-lg">La Belle de Jour</h3>
+                        <p class="text-gray-600">Alceu Valença</p>
+                    </div>
+                    <div class="player-controls">
+                        <button class="play-pause-btn"><i class="fas fa-play-circle"></i></button>
+                        <div class="progress-bar-container"><div class="progress-bar"></div></div>
+                    </div>
+                    <!-- IMPORTANTE: Troque 'labelle.mp3' pelo nome do seu arquivo de áudio -->
+                    <audio class="audio-player" src="labellesom.mp3"></audio>
+                </div>
+
+                <!-- Player 3: Luan Santana - Chuva de Arroz -->
+                <div class="music-card">
+                     <!-- IMPORTANTE: Troque 'capa-luan.jpg' pelo nome do seu arquivo de imagem -->
+                    <img src="chuva.png" alt="Capa do álbum Luan Santana Acústico de Luan Santana" class="w-full h-auto object-cover">
+                    <div class="p-4 text-left">
+                        <h3 class="font-bold text-lg">Chuva de Arroz</h3>
+                        <p class="text-gray-600">Luan Santana</p>
+                    </div>
+                    <div class="player-controls">
+                        <button class="play-pause-btn"><i class="fas fa-play-circle"></i></button>
+                        <div class="progress-bar-container"><div class="progress-bar"></div></div>
+                    </div>
+                    <!-- IMPORTANTE: Troque 'chuva.mp3' pelo nome do seu arquivo de áudio -->
+                    <audio class="audio-player" src="arrozsom.mp3"></audio>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- FIM DA SEÇÃO DE MÚSICA -->
+
+    <!-- Seção da Galeria -->
+    <section id="galeria" class="py-20 bg-rose-50 hidden">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl md:text-5xl text-center text-rose-800 mb-12 font-serif">Nossa História em Momentos</h2>
+            <div id="gallery-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- As fotos aparecerão aqui -->
+            </div>
+        </div>
+    </section>
+
+    <!-- INÍCIO DA NOVA SEÇÃO DO QUIZ -->
+    <section id="quiz" class="py-20 bg-white hidden">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl md:text-5xl text-center text-rose-800 mb-12 font-serif">Um Quiz com Vales Românticos</h2>
+            <div class="max-w-2xl mx-auto">
+                <!-- Pergunta 1 -->
+                <div class="quiz-card">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Qual a minha cor favorita?</h3>
+                    <div id="quiz-1-options">
+                        <button class="quiz-option" onclick="checkAnswer(1, 'preto')">Preto</button>
+                        <button class="quiz-option" onclick="checkAnswer(1, 'roxo')">Roxo</button>
+                        <button class="quiz-option" onclick="checkAnswer(1, 'azul')">Azul</button>
+                    </div>
+                    <div id="voucher-1" class="hidden"></div>
+                </div>
+                <!-- Pergunta 2 -->
+                <div class="quiz-card">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Qual o jogo que eu mais jogo atualmente?</h3>
+                    <div id="quiz-2-options">
+                        <button class="quiz-option" onclick="checkAnswer(2, 'cs2')">CS2</button>
+                        <button class="quiz-option" onclick="checkAnswer(2, 'valorant')">Valorant</button>
+                        <button class="quiz-option" onclick="checkAnswer(2, 'fortnite')">Fortnite</button>
+                    </div>
+                    <div id="voucher-2" class="hidden"></div>
+                </div>
+                <!-- Pergunta 3 -->
+                <div class="quiz-card">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Onde foi nosso primeiro beijo?</h3>
+                    <div id="quiz-3-options">
+                        <button class="quiz-option" onclick="checkAnswer(3, 'praia')">Na Praia</button>
+                        <button class="quiz-option" onclick="checkAnswer(3, 'restaurante')">Em um Restaurante</button>
+                        <button class="quiz-option" onclick="checkAnswer(3, 'festa')">Em uma Festa</button>
+                    </div>
+                    <div id="voucher-3" class="hidden"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- FIM DA NOVA SEÇÃO DO QUIZ -->
+    
+    <!-- Seção Final -->
+    <footer id="final" class="py-24 bg-rose-100 text-center hidden">
+        <h3 class="text-5xl md:text-7xl font-bold text-rose-500 mb-6">Eu te amo!</h3>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-32 h-32 text-rose-500 inline-block animate-pulse">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+    </footer>
+
+    <script>
+        // --- CONFIGURAÇÃO ---
+        const fotos = [
+            { url: 'fotocasal.png', data: '20/01/2023', local: 'Maracanã' },
+            { url: 'fotocasal2.png', data: '09/12/2021', local: 'Sana, 4 anos juntos' },
+            { url: 'fotocasal3.png', data: '06/11/2022', local: 'Ilha Grande' },
+            { url: 'fotocasal4.png', data: '20/12/2024', local: 'Country Club, Nova Friburgo' },
+            { url: 'fotocasal5.png', data: '05/02/2024', local: 'Show do Matuê, Búzios' },
+            { url: 'fotocasal6.png', data: '02/03/2025', local: 'Dedo de Deus, Teresópolis' },
+            { url: 'fotocasal7.png', data: '09/12/2025', local: 'Madame Merlot, Rio das Ostras, 7 anos de namoro' },
+            { url: 'fotocasal8.png', data: '04/03/2025', local: 'Granja Comary, Teresópolis' }
+        ];
+        const textoDaCarta = "Meu amor,\n\nApesar de toda a distância que possa existir em nosso dia a dia, o meu amor por você nunca deixou de ser o mesmo. Pelo contrário, ele só cresce e se fortalece.\n\nCada momento longe apenas me dá mais certeza de que é ao seu lado que eu quero estar, que é o seu sorriso que eu quero ver todos os dias.\n\nEu quero te amar para sempre e construir a história mais linda com você, cheia de risadas, companheirismo e do nosso amor. Você é o meu presente e o meu futuro.";
+
+        // --- LÓGICA DO SITE ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const envelope = document.getElementById('envelope');
+            const secaoCarta = document.getElementById('carta');
+            const secaoMusica = document.getElementById('musica');
+            const secaoGaleria = document.getElementById('galeria');
+            const secaoQuiz = document.getElementById('quiz');
+            const secaoFinal = document.getElementById('final');
+            const elementoTextoCarta = document.getElementById('texto-carta');
+            const scrollArrow = document.getElementById('scroll-arrow');
+            
+            let isTyping = false;
+
+            envelope.addEventListener('click', () => {
+                secaoCarta.classList.remove('hidden');
+                secaoCarta.classList.add('flex');
+                secaoCarta.scrollIntoView({ behavior: 'smooth' });
+                
+                if (!isTyping) {
+                    isTyping = true;
+                    setTimeout(iniciarDigitacao, 1000);
+                }
+            });
+
+            function iniciarDigitacao() {
+                let i = 0;
+                elementoTextoCarta.innerHTML = '<span class="blinking-cursor"></span>';
+                
+                function typeWriter() {
+                    if (i < textoDaCarta.length) {
+                        const char = textoDaCarta.charAt(i);
+                        const textNode = document.createTextNode(char);
+                        elementoTextoCarta.insertBefore(textNode, elementoTextoCarta.lastChild);
+                        i++;
+                        setTimeout(typeWriter, 50);
+                    } else {
+                        if (elementoTextoCarta.lastChild.classList.contains('blinking-cursor')) {
+                            elementoTextoCarta.removeChild(elementoTextoCarta.lastChild);
+                        }
+                        // Mostra o restante do conteúdo
+                        secaoMusica.classList.remove('hidden');
+                        secaoGaleria.classList.remove('hidden');
+                        secaoQuiz.classList.remove('hidden');
+                        secaoFinal.classList.remove('hidden');
+                        scrollArrow.classList.remove('hidden');
+                    }
+                }
+                typeWriter();
+            }
+
+            function carregarGaleria() {
+                const galleryContainer = document.getElementById('gallery-container');
+                fotos.forEach(foto => {
+                    const item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    item.innerHTML = `
+                        <img src="${foto.url}" alt="Foto de ${foto.local}" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x800/fecdd3/ffffff?text=Erro+ao+carregar'">
+                        <div class="overlay">
+                            <p class="font-bold text-lg">${foto.local}</p>
+                            <p class="text-sm">${foto.data}</p>
+                        </div>
+                    `;
+                    galleryContainer.appendChild(item);
+                });
+            }
+
+            carregarGaleria();
+
+            // --- LÓGICA DO PLAYER DE MÚSICA PERSONALIZADO ---
+            const musicCards = document.querySelectorAll('.music-card');
+
+            musicCards.forEach(card => {
+                const audio = card.querySelector('.audio-player');
+                const playBtnIcon = card.querySelector('.play-pause-btn i');
+                const progressBar = card.querySelector('.progress-bar');
+                const progressBarContainer = card.querySelector('.progress-bar-container');
+
+                // Ação de Play/Pause
+                playBtnIcon.parentElement.addEventListener('click', () => {
+                    const isPlaying = card.classList.contains('playing');
+
+                    // Pausa todas as outras músicas
+                    musicCards.forEach(otherCard => {
+                        if (otherCard !== card) {
+                            otherCard.classList.remove('playing');
+                            otherCard.querySelector('.audio-player').pause();
+                            const icon = otherCard.querySelector('.play-pause-btn i');
+                            icon.classList.remove('fa-pause-circle');
+                            icon.classList.add('fa-play-circle');
+                        }
+                    });
+
+                    // Toca ou pausa a música atual
+                    if (isPlaying) {
+                        audio.pause();
+                    } else {
+                        audio.play();
+                    }
+                    card.classList.toggle('playing');
+                    playBtnIcon.classList.toggle('fa-play-circle');
+                    playBtnIcon.classList.toggle('fa-pause-circle');
+                });
+
+                // Atualiza a barra de progresso
+                audio.addEventListener('timeupdate', (e) => {
+                    const { duration, currentTime } = e.srcElement;
+                    if(duration) {
+                        const progressPercent = (currentTime / duration) * 100;
+                        progressBar.style.width = `${progressPercent}%`;
+                    }
+                });
+
+                // Permite clicar na barra de progresso para avançar
+                progressBarContainer.addEventListener('click', (e) => {
+                    const width = progressBarContainer.clientWidth;
+                    const clickX = e.offsetX;
+                    const duration = audio.duration;
+
+                    if (duration) {
+                        audio.currentTime = (clickX / width) * duration;
+                    }
+                });
+
+                // Reseta o player quando a música acaba
+                audio.addEventListener('ended', () => {
+                    card.classList.remove('playing');
+                    playBtnIcon.classList.add('fa-play-circle');
+                    playBtnIcon.classList.remove('fa-pause-circle');
+                    progressBar.style.width = '0%';
+                });
+            });
+        });
+
+        // --- LÓGICA DO QUIZ ---
+        const respostasCorretas = {
+            1: 'preto',
+            2: 'valorant',
+            3: 'festa'
+        };
+
+        const vouchers = {
+            1: '<p class="font-bold text-lg text-amber-800">Parabéns! Você ganhou um:</p><p class="text-xl font-serif text-rose-600">Vale Jantar Feito por Mim</p>',
+            2: '<p class="font-bold text-lg text-amber-800">Acertou! Você ganhou um:</p><p class="text-xl font-serif text-rose-600">Vale Café em Qualquer Lugar</p>',
+            3: '<p class="font-bold text-lg text-amber-800">Isso! Você ganhou um prêmio especial:</p><p class="text-xl font-serif text-rose-600">Vale Fazer Tudo o Que Quiser Comigo no Fim de Semana</p>'
+        };
+
+        function checkAnswer(perguntaId, resposta) {
+            const optionsContainer = document.getElementById(`quiz-${perguntaId}-options`);
+            const voucherContainer = document.getElementById(`voucher-${perguntaId}`);
+            
+            // Impede de responder novamente se já acertou
+            if (optionsContainer.querySelector('.correct')) {
+                return;
+            }
+
+            const BOTAOCLICADO = event.target;
+            
+            if (resposta === respostasCorretas[perguntaId]) {
+                // Remove a classe de incorreto de outras opções
+                optionsContainer.querySelectorAll('.incorrect').forEach(btn => btn.classList.remove('incorrect'));
+                
+                // Adiciona a classe de correto ao botão certo
+                BOTAOCLICADO.classList.add('correct');
+
+                // Desabilita todos os botões da pergunta
+                optionsContainer.querySelectorAll('button').forEach(btn => {
+                    btn.disabled = true;
+                    if (!btn.classList.contains('correct')) {
+                       btn.style.opacity = '0.6';
+                       btn.style.cursor = 'not-allowed';
+                    }
+                });
+                
+                // Mostra o voucher
+                voucherContainer.innerHTML = `<div class="voucher">${vouchers[perguntaId]}</div>`;
+                voucherContainer.classList.remove('hidden');
+
+            } else {
+                // Marca como incorreto e remove depois de um tempo
+                BOTAOCLICADO.classList.add('incorrect');
+                setTimeout(() => {
+                    BOTAOCLICADO.classList.remove('incorrect');
+                }, 800);
+            }
+        }
+    </script>
+
+</body>
+</html>
